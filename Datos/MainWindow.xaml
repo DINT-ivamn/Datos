@@ -19,25 +19,25 @@
     
     <TabControl>
         <TabItem Header="Ver">
-            <ListBox ItemsSource="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:MainWindow}, Path=Clientes}" ItemTemplate="{StaticResource IdNombreDataTemplate}"
-                     x:Name="VerListBox"/>
+            <ListBox ItemsSource="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:MainWindow}, Path=Clientes}"
+                     ItemTemplate="{StaticResource IdNombreDataTemplate}"/>
         </TabItem>
         <TabItem Header="Insertar">
             <StackPanel Orientation="Vertical" Margin="10" x:Name="InsertarStackPanel">
                 <TextBlock Text="Identificador"/>
-                <TextBox Text="{Binding Path=id}" AcceptsReturn="False" Margin="0,0,0,5" x:Name="IdTextBox"/>
+                <TextBox Text="{Binding Path=id}" AcceptsReturn="False" Margin="0,0,0,5"/>
                 <TextBlock Text="Nombre"/>
-                <TextBox AcceptsReturn="False" Margin="0,0,0,5" x:Name="NombreTextBox" Text="{Binding Path=nombre}"/>
+                <TextBox AcceptsReturn="False" Margin="0,0,0,5" Text="{Binding Path=nombre}"/>
                 <TextBlock Text="Apellido"/>
-                <TextBox AcceptsReturn="False" Margin="0,0,0,5" x:Name="ApellidoTextBox" Text="{Binding Path=apellido}"/>
-                <Button Content="Insertar" HorizontalAlignment="Left" Margin="0,10" Padding="30,0" x:Name="InsertarButton" Click="InsertarButton_Click"/>
+                <TextBox AcceptsReturn="False" Margin="0,0,0,5" Text="{Binding Path=apellido}"/>
+                <Button Content="Insertar" HorizontalAlignment="Left" Margin="0,10" Padding="30,0" Click="InsertarButton_Click"/>
             </StackPanel>
         </TabItem>
         <TabItem Header="Eliminar">
             <StackPanel Orientation="Vertical" Margin="10">
                 <ComboBox HorizontalAlignment="Left" Width="200" ItemsSource="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:MainWindow}, Path=Clientes}"
                           DisplayMemberPath="id" x:Name="EliminarComboBox"/>
-                <Button Content="Eliminar" HorizontalAlignment="Left" Margin="0,10" Padding="30,0" x:Name="EliminarButton" Click="EliminarButton_Click"/>
+                <Button Content="Eliminar" HorizontalAlignment="Left" Margin="0,10" Padding="30,0" Click="EliminarButton_Click"/>
             </StackPanel>
         </TabItem>
         <TabItem Header="Modificar">
@@ -50,7 +50,7 @@
                 <TextBox Text="{Binding ElementName=ModificarComboBox, Path=SelectedItem.nombre}" AcceptsReturn="False" Margin="0,0,0,5"/>
                 <TextBlock Text="Apellido"/>
                 <TextBox Text="{Binding ElementName=ModificarComboBox, Path=SelectedItem.apellido}" AcceptsReturn="False" Margin="0,0,0,5"/>
-                <Button x:Name="ModificarButton" Content="Modificar" HorizontalAlignment="Left" Margin="0,10" Padding="30,0" Click="ModificarButton_Click"/>
+                <Button Content="Modificar" HorizontalAlignment="Left" Margin="0,10" Padding="30,0" Click="ModificarButton_Click"/>
             </StackPanel>
         </TabItem>
     </TabControl>
