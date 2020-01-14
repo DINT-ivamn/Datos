@@ -20,13 +20,7 @@
     <TabControl>
         <TabItem Header="Lista">
             <ListBox ItemsSource="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:MainWindow}, Path=Clientes}"
-                     ItemTemplate="{StaticResource IdNombreDataTemplate}">
-                <ListBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <UniformGrid Columns="2"/>
-                    </ItemsPanelTemplate>
-                </ListBox.ItemsPanel>
-                </ListBox>
+                     ItemTemplate="{StaticResource IdNombreDataTemplate}"/>
         </TabItem>
         <TabItem Header="Insertar">
             <StackPanel Orientation="Vertical" Margin="10" x:Name="InsertarStackPanel">
@@ -58,6 +52,45 @@
                 <TextBox Text="{Binding ElementName=ModificarComboBox, Path=SelectedItem.apellido}" AcceptsReturn="False" Margin="0,0,0,5"/>
                 <Button Content="Modificar" HorizontalAlignment="Left" Margin="0,10" Padding="30,0" Click="ModificarButton_Click"/>
             </StackPanel>
+        </TabItem>
+        <TabItem Header="DataGrid">
+            <DockPanel>
+                <Button Click="ModificarButton_Click" DockPanel.Dock="Bottom" Content="Actualizar" HorizontalAlignment="Left" Margin="7" Padding="30,0"/>
+                <DataGrid ItemsSource="{Binding}" DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:MainWindow}, Path=ClientesViewSource}"
+                          AutoGenerateColumns="False" DockPanel.Dock="Top">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Width="*" Header="Identificador" Binding="{Binding id}"/>
+                        <DataGridTextColumn Width="2*" Header="Nombre" Binding="{Binding nombre}"/>
+                        <DataGridTextColumn Width="2*" Header="Apellido" Binding="{Binding apellido}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </DockPanel>
+        </TabItem>
+        <TabItem Header="Filtrar">
+            <DockPanel>
+                <StackPanel Orientation="Horizontal" Margin="10" DockPanel.Dock="Top">
+                    <TextBlock Text="Nombre:" Margin="5"/>
+                    <TextBox AcceptsReturn="False" Margin="5"  Width="200" x:Name="FiltroTextBox"/>
+                    <Button Click="Filtrar_Click" Margin="5" Width="150" Content="Filtrar"/>
+                </StackPanel>
+                <DataGrid ItemsSource="{Binding}" DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:MainWindow}, Path=ClientesViewSource}"
+                          DockPanel.Dock="Bottom" AutoGenerateColumns="False" IsReadOnly="True">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Width="*" Header="Identificador" Binding="{Binding id}"/>
+                        <DataGridTemplateColumn Width="3*" Header="Nombre completo">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock>
+                                        <Run Text="{Binding nombre}"/>
+                                        <Run Text="{Binding apellido}"/>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Width="*" Header="Nº de pedidos" Binding="{Binding PEDIDOS.Count}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </DockPanel>
         </TabItem>
     </TabControl>
 </Window>

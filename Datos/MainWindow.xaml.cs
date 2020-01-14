@@ -23,15 +23,39 @@ namespace Datos
     public partial class MainWindow : Window
     {
         public ObservableCollection<CLIENTE> Clientes { get; }
+        public CollectionViewSource ClientesViewSource { get; }
         private InformesEntities Contexto { get; }
 
         public MainWindow()
         {
             Contexto = new InformesEntities();
-            Contexto.CLIENTES.Load();
-            Clientes = Contexto.CLIENTES.Local;
+
+            var consulta = from Cliente in Contexto.CLIENTES.Include("PEDIDOS")
+                           select Cliente;
+            Clientes = new ObservableCollection<CLIENTE>(consulta.ToList());
+            //Contexto.CLIENTES.Load();
+            //Contexto.PEDIDOS.Load();
+            //Clientes = Contexto.CLIENTES.Local;
+
+            ClientesViewSource = new CollectionViewSource();
+            ClientesViewSource.Source = Clientes;
             InitializeComponent();
+            ClientesViewSource.Filter += ClientesViewSource_Filter;
             InsertarStackPanel.DataContext = new CLIENTE();
+        }
+
+        private void ClientesViewSource_Filter(object sender, FilterEventArgs e)
+        {
+            CLIENTE c = (CLIENTE)e.Item;
+            string filtro = FiltroTextBox.Text;
+            if (string.IsNullOrEmpty(filtro))
+            {
+                e.Accepted = true;
+            }
+            else
+            {
+                e.Accepted = c.nombre.Contains(filtro);
+            }
         }
 
         private void ModificarButton_Click(object sender, RoutedEventArgs e)
@@ -50,6 +74,11 @@ namespace Datos
             Contexto.CLIENTES.Add((CLIENTE) InsertarStackPanel.DataContext);
             Contexto.SaveChanges();
             InsertarStackPanel.DataContext = new CLIENTE();
+        }
+
+        private void Filtrar_Click(object sender, RoutedEventArgs e)
+        {
+            ClientesViewSource.View.Refresh();
         }
     }
 }
