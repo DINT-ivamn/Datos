@@ -18,9 +18,15 @@
     </Window.Resources>
     
     <TabControl>
-        <TabItem Header="Ver">
+        <TabItem Header="Lista">
             <ListBox ItemsSource="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:MainWindow}, Path=Clientes}"
-                     ItemTemplate="{StaticResource IdNombreDataTemplate}"/>
+                     ItemTemplate="{StaticResource IdNombreDataTemplate}">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="2"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                </ListBox>
         </TabItem>
         <TabItem Header="Insertar">
             <StackPanel Orientation="Vertical" Margin="10" x:Name="InsertarStackPanel">
