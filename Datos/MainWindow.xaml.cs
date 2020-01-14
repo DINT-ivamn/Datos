@@ -29,16 +29,13 @@ namespace Datos
         public MainWindow()
         {
             Contexto = new InformesEntities();
+            Contexto.CLIENTES.Include("PEDIDOS").Load();
+            Clientes = Contexto.CLIENTES.Local;
 
-            var consulta = from Cliente in Contexto.CLIENTES.Include("PEDIDOS")
-                           select Cliente;
-            Clientes = new ObservableCollection<CLIENTE>(consulta.ToList());
-            //Contexto.CLIENTES.Load();
-            //Contexto.PEDIDOS.Load();
-            //Clientes = Contexto.CLIENTES.Local;
-
-            ClientesViewSource = new CollectionViewSource();
-            ClientesViewSource.Source = Clientes;
+            ClientesViewSource = new CollectionViewSource
+            {
+                Source = Clientes
+            };
             InitializeComponent();
             ClientesViewSource.Filter += ClientesViewSource_Filter;
             InsertarStackPanel.DataContext = new CLIENTE();
